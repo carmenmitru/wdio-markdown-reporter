@@ -1,6 +1,6 @@
 {
   "name": "wdio-markdown-reporter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "WebdriverIO plugin for Markdown report",
   "author": "Carmen Mitru <carmen.mitru@gmail.com>",
   "homepage": "https://github.com/carmenmitru/wdio-markdown-reporter",
@@ -25,15 +25,14 @@
   "keywords": [
     "webdriverio",
     "wdio",
-    "slack",
-    "wdio-service"
+    "markdown",
+    "wdio-reporter"
   ],
   "bugs": {
     "url": "https://github.com/carmenmitru/wdio-markdown-reporter/issues"
   },
   "dependencies": {
     "@wdio/cli": "5.0.0",
-    "@slack/webhook": "5.0.2",
     "rimraf": "^3.0.0",
     "moment": "^2.24.0"
   },
