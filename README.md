@@ -47,3 +47,12 @@ Define a directory where your markdown file should get stored.
 
 Type: `String`<br>
 Required
+
+## Merge all \*.md files
+
+To generate only one markdown file use the **concat-cli** CLI to concat the files
+
+```bash
+concat-cli -f ./markdown-reporter/*.md -o mergeResult.md
+
+```
