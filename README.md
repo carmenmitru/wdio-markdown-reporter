@@ -6,16 +6,6 @@
 
 ## Installation
 
-The easiest way is to keep `wdio-markdown-reporter` as a devDependency in your `package.json`.
-
-```json
-{
-  "devDependencies": {
-    "wdio-markdown-reporter": "1.0.0"
-  }
-}
-```
-
 You can simple do it by:
 
 ```bash
