@@ -2,6 +2,8 @@
 
 > A WebdriverIO plugin to report in Markdown style.
 
+![Reporter](./img/reporter.png)
+
 ## Installation
 
 The easiest way is to keep `wdio-markdown-reporter` as a devDependency in your `package.json`.
