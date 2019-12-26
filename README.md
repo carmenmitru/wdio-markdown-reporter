@@ -40,8 +40,7 @@ In order to use the service you need to add reporter to your services array in w
 export.config = {
   reporter: : [
     [markdownReporter, {
-      outputDir: '',
-      filename: ''
+      outputDir: ' ',
     }],
   ],
 };
@@ -58,7 +57,3 @@ Define a directory where your markdown file should get stored.
 
 Type: `String`<br>
 Required
-
-### filename
-
-Define the name if the markdown report.

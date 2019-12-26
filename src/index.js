@@ -16,9 +16,9 @@ class MarkdownReporter extends WDIOReporter {
             failed: 0,
             passed: 0
         };
-
-        this.output = [];
+        this.createHeaderReport();
     }
+
     onTestPass() {
         this.stateCounts.passed++;
     }
@@ -40,59 +40,56 @@ class MarkdownReporter extends WDIOReporter {
     onRunnerEnd(runner) {
         this.createReport(runner);
     }
-    /**
-     * Write the file with the config properties
-     */
-    writeFile(report) {
-        let filename = '';
+
+    writeTestReport(filename, report) {
         let folder = '';
         !this.options.outputDir ? (folder = process.cwd()) : (folder = this.options.outputDir);
-        !this.options.filename ? (filename = 'markdownReport.md') : (filename = `${this.options.filename}.md`);
         const filePath = path.join(folder, filename);
         fs.writeFileSync(filePath, report);
     }
     /**
-     * Create the file with the Markdown report
+    * Create a markdown file for each test
+    * 
+    */
+    createReport(runner) {
+
+        const testTemplate = [
+            ...this.getFailureDisplay()
+        ];
+        if (testTemplate.length > 0) {
+            let filename = `wdio-${runner.cid}.md`
+            this.writeTestReport(filename, testTemplate.join("\n"));
+        }
+
+    }
+
+    /**
+     * Create the header markdown file
      */
-    createReport() {
+    createHeaderReport() {
         let dateReport = moment().format("MMMM Do YYYY, h:mm:ss");
         let titleReport = `# Markdown Test Report  \n _Report generated on ${dateReport}_ \n`;
         let failedTest = "## Failed Tests   \n \n";
-        const markdownTemplate = [
+        const headerTemplate = [
             titleReport,
-            this.getCountDisplay(),
             failedTest,
-            ...this.getFailureDisplay()
         ];
-
-        this.writeFile(markdownTemplate.join("\n"));
+        let filename = 'header.md';
+        let folder = this.options.outputDir;
+        let filePath = path.join(folder, filename);
+        fs.writeFileSync(filePath, headerTemplate.join('\n'));
     }
-
     /**
-     * Get the display for passed/failed tests
-     * @return {String} Count display
-     */
-    getCountDisplay() {
-        let output = [];
-        const failedTestsCount = this.stateCounts.failed;
-        const passsedTestsCount = this.stateCounts.passed;
-        output.push(
-            `- ${failedTestsCount} failed \n` + `- ${passsedTestsCount} passed \n`
-        );
-        return output;
-    }
-
-    /**
-     * Get display for failed tests, e.g. stack trace
-     * @return {Array} Stack trace output
-     */
+    * Get display for failed tests, e.g. stack trace
+    * @return {Array} Stack trace output
+    */
     getFailureDisplay() {
         let output = [];
         this.getOrderedSuites().map(suite =>
             suite.tests.map(test => {
                 if (test.state === "failed") {
                     output.push(
-                        `__${test.error.message}__ \n  > **AssertionError:**  ${test.error.stack}`
+                        `__${test.error.message}__ \n  > **AssertionError:**  ${test.error.stack} \n\n`
                     );
                 }
             })
